@@ -1,0 +1,92 @@
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Car Workshop{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Ubuntu&display=swap" rel="stylesheet">
+    <style>
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            background-color: #333;
+        }
+        nav ul li {
+            margin: 0;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 15px 20px;
+            display: block;
+            transition: background-color 0.3s;
+        }
+        nav ul li a:hover {
+            background-color: #555;
+        }
+
+        .messages {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            margin: 20px 0;
+            border: 1px solid #f5c6cb;
+            border-radius: 5px;
+        }
+
+        .messages p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <p class="{{ message.tags }}">{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <!-- Footer -->
+    <footer style="text-align: center; padding: 20px; background-color: #f1f1f1; margin-top: 40px;">
+        <p>© 2025 Car Workshop. All Rights Reserved.</p>
+        <p>Contact us: carworkshop@example.com | +880-1234-567890</p>
+        <p>Address: 123 Workshop Road, Dhaka, Bangladesh</p>
+    </footer>
+
+    <script src="https://kit.fontawesome.com/692c2638c1.js" crossorigin="anonymous"></script>
+    <script>
+        // Add active class to the current page link
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPath = window.location.pathname;
+            const navLinks = document.querySelectorAll('nav ul li a');
+
+            navLinks.forEach(link => {
+                // Check if the link's href matches the current page path
+                if (currentPath === link.getAttribute('href')) {
+                    link.style.backgroundColor = '#555';  // Highlight the current page link
+                }
+            });
+        });
+    </script>
+</body>
+</html>

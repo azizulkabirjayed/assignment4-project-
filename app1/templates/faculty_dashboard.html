@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Faculty Dashboard{% endblock %}
+
+{% block content %}
+    <h2>Faculty Dashboard</h2>
+    <p>Welcome, {{ user.first_name }}!</p>
+
+    <h3>Your Classrooms</h3>
+    {% if classrooms %}
+        <ul>
+            {% for classroom in classrooms %}
+                <li>{{ classroom.name }} (Created: {{ classroom.created_at|date:"F d, Y" }})</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You have not created any classrooms.</p>
+    {% endif %}
+
+    <h3>Your Announcements</h3>
+    {% if announcements %}
+        <ul>
+            {% for announcement in announcements %}
+                <li>{{ announcement.title }} (Posted: {{ announcement.posted_at|date:"F d, Y" }})</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You have not posted any announcements.</p>
+    {% endif %}
+
+    <ul>
+        <li><a href="{% url 'home' %}">Back to Home</a></li>
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+    </ul>
+{% endblock %}

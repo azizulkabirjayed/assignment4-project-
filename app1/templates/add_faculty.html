@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Faculty</title>
+    <style>
+        .navbar {
+            background-color: #2c3e50;
+            overflow: hidden;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .navbar li {
+            flex: 1;
+        }
+
+        .navbar a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .navbar a:hover {
+            background-color: #34495e;
+        }
+
+        .navbar a.active {
+            background-color: #1abc9c;
+            font-weight: bold;
+        }
+
+        @media (max-width: 600px) {
+            .navbar ul {
+                flex-direction: column;
+            }
+
+            .navbar li {
+                flex: none;
+            }
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .messages {
+            margin-bottom: 20px;
+        }
+
+        .error {
+            color: red;
+        }
+
+        .success {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <ul>
+            <li><a href="{% url 'notice_board' %}" id="nav-notice-board">Notice Board</a></li>
+            <li><a href="{% url 'add_notice' %}" id="nav-add-notice">Add Notice</a></li>
+            <li><a href="{% url 'add_faculty' %}" id="nav-add-faculty">Add Faculty</a></li>
+            <li><a href="{% url 'faculty_list' %}" id="nav-faculty-list">Faculty List</a></li>
+        </ul>
+    </div>
+    <div class="container">
+        <h2>Add New Faculty</h2>
+        
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <p class="{% if message.tags %}{{ message.tags }}{% endif %}">{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+        
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="first_name">First Name:</label>
+                <input type="text" id="first_name" name="first_name" required>
+            </div>
+            <div class="form-group">
+                <label for="last_name">Last Name:</label>
+                <input type="text" id="last_name" name="last_name" required>
+            </div>
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="confirm_password">Confirm Password:</label>
+                <input type="password" id="confirm_password" name="confirm_password" required>
+            </div>
+            <button type="submit">Add Faculty</button>
+        </form>
+        <p><a href="{% url 'faculty_list' %}">Back to Faculty List</a></p>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get current URL path
+            const currentPath = window.location.pathname;
+
+            // Define mapping of paths to nav link IDs
+            const navLinks = {
+                '/admin_dashboard/notice_board/': 'nav-notice-board',
+                '/admin_dashboard/add_notice/': 'nav-add-notice',
+                '/admin_dashboard/add_faculty/': 'nav-add-faculty',
+                '/admin_dashboard/faculty_list/': 'nav-faculty-list',
+                '/admin_dashboard/': 'nav-notice-board' // Default to notice board for dashboard
+            };
+
+            // Add 'active' class to the corresponding nav link
+            for (const path in navLinks) {
+                if (currentPath === path) {
+                    document.getElementById(navLinks[path]).classList.add('active');
+                    break;
+                }
+            }
+        });
+    </script>
+</body>
+</html>

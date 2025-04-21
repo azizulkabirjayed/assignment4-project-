@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Welcome Home{% endblock %}
+
+{% block content %}
+    <h2>Welcome, {{ user.first_name }}!</h2>
+    <p>Welcome to the dashboard. Here are some quick links to the important sections:</p>
+
+    <ul>
+        <li>hi</li>
+        {% if user.role == 'admin' %}
+            <li><a href="{% url 'admin_dashboard' %}">Admin Dashboard</a></li>
+        {% elif user.role == 'faculty' %}
+            <li><a href="{% url 'faculty_dashboard' %}">Faculty Dashboard</a></li>
+        {% else %}
+            <li><a href="{% url 'student_dashboard' %}">Student Dashboard</a></li>
+        {% endif %}
+
+        <li><a href="{% url 'logout' %}">Logout</a></li>  
+    </ul>
+{% endblock %}

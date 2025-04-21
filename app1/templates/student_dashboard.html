@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}Student Dashboard{% endblock %}
+
+{% block content %}
+    <h2>Student Dashboard</h2>
+    <p>Welcome, {{ user.first_name }}!</p>
+
+    <h3>Your Enrolled Classrooms</h3>
+    {% if enrolled_classrooms %}
+        <ul>
+            {% for enrollment in enrolled_classrooms %}
+                <li>{{ enrollment.classroom_id.name }} (Joined: {{ enrollment.joined_at|date:"F d, Y" }})</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You are not enrolled in any classrooms.</p>
+    {% endif %}
+
+    <h3>Pending Classroom Join Requests</h3>
+    {% if pending_requests %}
+        <ul>
+            {% for request in pending_requests %}
+                <li>{{ request.classroom_id.name }} (Requested: {{ request.requested_at|date:"F d, Y" }}) - Status: {{ request.get_status_display }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You have no pending join requests.</p>
+    {% endif %}
+
+    <ul>
+        <li><a href="{% url 'home' %}">Back to Home</a></li>
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+    </ul>
+{% endblock %}
